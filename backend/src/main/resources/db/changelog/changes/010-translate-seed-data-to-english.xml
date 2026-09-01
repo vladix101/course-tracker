@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="010-translate-seed-data-to-english" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="city"/>
+            <tableExists tableName="listening_group"/>
+        </preConditions>
+        <sql splitStatements="true" stripComments="true">
+            UPDATE city SET name = 'Belgrade' WHERE id = 1 AND name = 'Beograd';
+
+            UPDATE listening_group SET name = 'Java Group 1' WHERE id = 1 AND name = 'Java grupa 1';
+            UPDATE listening_group SET name = 'React Group 1' WHERE id = 101 AND name = 'React grupa 1';
+            UPDATE listening_group SET name = 'SQL Group 1' WHERE id = 102 AND name = 'SQL grupa 1';
+            UPDATE listening_group SET name = 'Spring Boot Group 1' WHERE id = 103 AND name = 'Spring Boot grupa 1';
+            UPDATE listening_group SET name = 'React Components Group 1' WHERE id = 104 AND name = 'React Components grupa 1';
+            UPDATE listening_group SET name = 'Advanced SQL Group 1' WHERE id = 105 AND name = 'Advanced SQL grupa 1';
+            UPDATE listening_group SET name = 'Architecture Group 1' WHERE id = 106 AND name = 'Architecture grupa 1';
+            UPDATE listening_group SET name = 'HTML CSS Group 1' WHERE id = 107 AND name = 'HTML CSS grupa 1';
+            UPDATE listening_group SET name = 'Java Group 2' WHERE id = 108 AND name = 'Java grupa 2';
+            UPDATE listening_group SET name = 'React Group 2' WHERE id = 109 AND name = 'React grupa 2';
+            UPDATE listening_group SET name = 'SQL Group 2' WHERE id = 110 AND name = 'SQL grupa 2';
+        </sql>
+    </changeSet>
+</databaseChangeLog>
