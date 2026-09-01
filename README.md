@@ -1,15 +1,15 @@
 # Course Tracker
 
-Course Tracker je full-stack web aplikacija za organizaciju i praćenje kurseva, predmeta i grupa za slušanje (listening groups). Aplikacija omogućava kandidatima da se registruju, prijave na grupe za slušanje kurseva i prate svoj napredak, dok instruktori vode grupe u okviru predmeta koje predaju.
+Course Tracker is a full-stack web application for organizing and tracking courses, subjects, and listening groups. Candidates can register, join listening groups for courses, and track their progress, while instructors run groups within the subjects they teach.
 
-## Tehnologije
+## Technologies
 
 **Backend**
 - Java 17
 - Spring Boot 4 (Web MVC, Data JPA, Validation, Mail, Actuator)
 - MySQL
-- Liquibase (verzionisanje baze podataka)
-- OpenPDF (generisanje PDF potvrda)
+- Liquibase (database schema versioning)
+- OpenPDF (PDF confirmation generation)
 - Lombok
 - Maven
 
@@ -17,71 +17,71 @@ Course Tracker je full-stack web aplikacija za organizaciju i praćenje kurseva,
 - React 19 + Vite
 - React Router
 - React Bootstrap / Bootstrap 5
-- Recharts (grafici)
+- Recharts (charts)
 
-## Funkcionalnosti
+## Features
 
-- Registracija i prijava korisnika (kandidati i instruktori) uz verifikaciju putem e-mail koda
-- Pregled predmeta, kurseva i gradova
-- Kreiranje, izmena i brisanje grupa za slušanje kursa
-- Prijava kandidata na grupu za slušanje (join group)
-- Generisanje PDF potvrde o prijavi na grupu
-- Pregled kandidata sa njihovim grupama za slušanje i istorijom
-- Responsivan korisnički interfejs
+- User registration and login (candidates and instructors) with e-mail verification code
+- Browsing subjects, courses, and cities
+- Creating, editing, and deleting listening groups
+- Candidates joining a listening group
+- Generating a PDF confirmation for a group registration
+- Viewing candidates along with their listening groups and history
+- Responsive user interface
 
-## Struktura projekta
+## Project structure
 
 ```
 njt/
 ├── backend/   # Spring Boot REST API
-└── frontend/  # React (Vite) klijentska aplikacija
+└── frontend/  # React (Vite) client application
 ```
 
-### Backend paketi
+### Backend packages
 
 ```
 com.projekat.backend
-├── config       # konfiguracija aplikacije
-├── controller   # REST kontroleri
-├── dto          # data transfer objekti
-├── entity       # JPA entiteti (User, Candidate, Instructor, Course, Subject, City, ListeningGroup, LC, ...)
-├── exception    # rukovanje greškama
-├── repository   # Spring Data JPA repozitorijumi
-└── service      # poslovna logika
+├── config       # application configuration
+├── controller   # REST controllers
+├── dto          # data transfer objects
+├── entity       # JPA entities (User, Candidate, Instructor, Course, Subject, City, ListeningGroup, LC, ...)
+├── exception    # error handling
+├── repository   # Spring Data JPA repositories
+└── service      # business logic
 ```
 
-## Pokretanje aplikacije
+## Running the application
 
-### Preduslovi
+### Prerequisites
 
 - Java 17+
-- Maven (ili korišćenje priloženog `mvnw` wrapper-a)
-- Node.js 18+ i npm
+- Maven (or the bundled `mvnw` wrapper)
+- Node.js 18+ and npm
 - MySQL server
 
 ### Backend
 
-1. Kreirati MySQL bazu, npr:
+1. Create the MySQL database, e.g.:
    ```sql
    CREATE DATABASE njtseminarski;
    ```
-2. Podesiti konekciju na bazu po potrebi u `backend/src/main/resources/application.properties`:
+2. Configure the database connection as needed in `backend/src/main/resources/application.properties`:
    ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/njtseminarski
    spring.datasource.username=root
    spring.datasource.password=
    ```
-3. Mail lozinka se ne čuva u fajlu, već se čita iz environment varijable `MAIL_PASSWORD` (Gmail app password za nalog naveden u `spring.mail.username`). Pre pokretanja backend-a je potrebno postaviti tu varijablu, npr:
+3. The mail password is not stored in the file; it is read from the `MAIL_PASSWORD` environment variable (a Gmail app password for the account set in `spring.mail.username`). Set this variable before starting the backend, e.g.:
    ```bash
-   export MAIL_PASSWORD=<app-lozinka>   # Linux/macOS
-   $env:MAIL_PASSWORD="<app-lozinka>"   # Windows PowerShell
+   export MAIL_PASSWORD=<app-password>   # Linux/macOS
+   $env:MAIL_PASSWORD="<app-password>"   # Windows PowerShell
    ```
-4. Pokrenuti aplikaciju iz `backend` foldera:
+4. Run the application from the `backend` folder:
    ```bash
    ./mvnw spring-boot:run
    ```
 
-Šema baze se automatski primenjuje pomoću Liquibase migracija (`db/changelog`) prilikom pokretanja aplikacije. Backend po podrazumevanim podešavanjima sluša na portu `8080`.
+The database schema is applied automatically via Liquibase migrations (`db/changelog`) on application startup. By default the backend listens on port `8080`.
 
 ### Frontend
 
@@ -91,15 +91,15 @@ npm install
 npm run dev
 ```
 
-Aplikacija će biti dostupna na adresi koju ispiše Vite (podrazumevano `http://localhost:5173`).
+The application will be available at the address printed by Vite (by default `http://localhost:5173`).
 
 ## API
 
-Backend izlaže REST API pod prefiksom `/api`, između ostalog:
+The backend exposes a REST API under the `/api` prefix, including:
 
-- `POST /api/register/candidate`, `POST /api/register/instructor` — registracija uz e-mail verifikaciju
-- `POST /api/login` — prijava korisnika
-- `GET /api/subjects`, `GET /api/courses`, `GET /api/cities` — osnovni podaci
-- `GET /api/listening-groups`, `POST /api/listening-groups`, `PUT /api/listening-groups/{id}`, `DELETE /api/listening-groups/{id}` — upravljanje grupama za slušanje
-- `POST /api/candidates/{candidateId}/listening-groups/{listeningGroupId}/join` — prijava kandidata na grupu
-- `GET /api/candidates/{candidateId}/listening-groups/{listeningGroupId}/confirmation` — PDF potvrda o prijavi
+- `POST /api/register/candidate`, `POST /api/register/instructor` — registration with e-mail verification
+- `POST /api/login` — user login
+- `GET /api/subjects`, `GET /api/courses`, `GET /api/cities` — reference data
+- `GET /api/listening-groups`, `POST /api/listening-groups`, `PUT /api/listening-groups/{id}`, `DELETE /api/listening-groups/{id}` — listening group management
+- `POST /api/candidates/{candidateId}/listening-groups/{listeningGroupId}/join` — candidate joins a group
+- `GET /api/candidates/{candidateId}/listening-groups/{listeningGroupId}/confirmation` — PDF registration confirmation
