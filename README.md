@@ -65,16 +65,18 @@ com.projekat.backend
    ```sql
    CREATE DATABASE njtseminarski;
    ```
-2. Podesiti konekciju na bazu i mail servis u `backend/src/main/resources/application.properties` (ili preko environment varijabli):
+2. Podesiti konekciju na bazu po potrebi u `backend/src/main/resources/application.properties`:
    ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/njtseminarski
    spring.datasource.username=root
    spring.datasource.password=
-
-   spring.mail.username=<vaš-email>
-   spring.mail.password=<app-lozinka>
    ```
-3. Pokrenuti aplikaciju iz `backend` foldera:
+3. Mail lozinka se ne čuva u fajlu, već se čita iz environment varijable `MAIL_PASSWORD` (Gmail app password za nalog naveden u `spring.mail.username`). Pre pokretanja backend-a je potrebno postaviti tu varijablu, npr:
+   ```bash
+   export MAIL_PASSWORD=<app-lozinka>   # Linux/macOS
+   $env:MAIL_PASSWORD="<app-lozinka>"   # Windows PowerShell
+   ```
+4. Pokrenuti aplikaciju iz `backend` foldera:
    ```bash
    ./mvnw spring-boot:run
    ```
