@@ -1,13 +1,15 @@
+name: course-tracker
+
 services:
   mysql:
     image: mysql:8.4
-    container_name: njt-mysql
+    container_name: course-tracker-mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: njtseminarski
     ports:
-      # 3307 na hostu da se ne sudara sa lokalnim MySQL-om na 3306
+      # 3307 on the host so it does not clash with a local MySQL on 3306
       - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
@@ -20,7 +22,7 @@ services:
 
   backend:
     build: ./backend
-    container_name: njt-backend
+    container_name: course-tracker-backend
     restart: unless-stopped
     depends_on:
       mysql:
@@ -29,15 +31,15 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/njtseminarski?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-      # Gmail app lozinka - stavi je u .env (nije u gitu). Bez nje app radi,
-      # samo slanje verifikacionih mejlova ne prolazi.
+      # Gmail app password - put it in .env (not in git). The app runs without it,
+      # only the verification emails are not delivered.
       MAIL_PASSWORD: ${MAIL_PASSWORD:-}
     ports:
       - "8080:8080"
 
   frontend:
     build: ./frontend
-    container_name: njt-frontend
+    container_name: course-tracker-frontend
     restart: unless-stopped
     depends_on:
       - backend

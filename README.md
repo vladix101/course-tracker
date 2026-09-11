@@ -32,7 +32,7 @@ Course Tracker is a full-stack web application for organizing and tracking cours
 ## Project structure
 
 ```
-njt/
+course-tracker/
 ├── backend/   # Spring Boot REST API
 └── frontend/  # React (Vite) client application
 ```
