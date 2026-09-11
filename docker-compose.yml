@@ -29,6 +29,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/njtseminarski?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      # Gmail app lozinka - stavi je u .env (nije u gitu). Bez nje app radi,
+      # samo slanje verifikacionih mejlova ne prolazi.
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
     ports:
       - "8080:8080"
 
