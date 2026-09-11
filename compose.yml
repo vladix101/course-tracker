@@ -33,6 +33,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       # Gmail app password - put it in .env (not in git). The app runs without it,
       # only the verification emails are not delivered.
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
       MAIL_PASSWORD: ${MAIL_PASSWORD:-}
     ports:
       - "8080:8080"
